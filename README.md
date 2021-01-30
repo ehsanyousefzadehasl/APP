@@ -2,12 +2,12 @@
 This repository aims at making the reader fluent in python language. If you need to review the fundamentals go [here](https://github.com/ehsanyousefzadehasl/PF) which reviews python syntax with exercises.
 
 Also, here there are some exxercises that summarises for you basic python.
-- [Favorite genres to be counted and sorted based on two keys with different orders](code/03-favorite-genres.py)
-- [To show a number that its prime dividers count is max in a given lists](code/04-max_num_of_prime_divider.py)
+- [Favorite genres to be counted and sorted based on two keys with different orders](code/01-intro/03-favorite-genres.py)
+- [To show a number that its prime dividers count is max in a given lists](code/01-intro/04-max_num_of_prime_divider.py)
 
-- [String operations and sorting based on two keys](code/05-olympiad_list.py)
-- [Detecting capitalized words in several sentences](code/06-index_words_in_a_paragraph.py)
-- [a translator using dictionary](code/07-pocket_translator.py)
+- [String operations and sorting based on two keys](code/01-intro/05-olympiad_list.py)
+- [Detecting capitalized words in several sentences](code/01-intro/06-index_words_in_a_paragraph.py)
+- [a translator using dictionary](code/01-intro/07-pocket_translator.py)
 
 ## Introduction
 ### lambda, map, filter

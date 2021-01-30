@@ -17,8 +17,48 @@ In the following snippet, it is shown how **lambda** make a programmer's life mu
 
 ```python
 a = [1, 2, 3, 4, 12, 12, 324, 45]
-list(map(lambda x: "even" if x % 2 == 0 else "odd",a))
-# output: ['odd', 'even', 'odd', 'even', 'even', 'even', 'even', 'odd']
+print(list(map(lambda x: "even" if x % 2 == 0 else "odd",a)))
+
+# output
+#['odd', 'even', 'odd', 'even', 'even', 'even', 'even', 'odd']
+```
+
+```python
+array = [(1,4,5), (3,2,7), (8,3,6), (9,2,3)]
+array.sort(key = lambda a:a[2])
+print(array)
+
+# output
+# [(9, 2, 3), (1, 4, 5), (8, 3, 6), (3, 2, 7)]
+```
+
+```python
+mylist = [2,3,5,8,11,14,17,102,44]
+print(list(map(lambda x:'Odd' if  x%2==1 else 'Even',mylist)))
+
+# output
+# ['Even', 'Odd', 'Odd', 'Even', 'Odd', 'Even', 'Odd', 'Even', 'Even']
+```
+
+```python
+mylist = [2,15,26,8,11,14,17,102,44]
+map_list = map(lambda x:x%10,mylist)
+filter_list = list(filter(lambda x: x<=4,map_list))
+print(filter_list)
+
+# output
+# [2, 1, 4, 2, 4]
+```
+
+```python
+mylist = ['yellow', 'red', 'blue','red','yellow','red','blue','purple']
+mylist.sort()
+mylist = list(map(lambda x: 'color' if x=='red' else x,mylist))
+output = list(filter(lambda x: x=='red',mylist))
+print(output)
+
+# output
+# []
 ```
 
 FILTERs are another useful structure in python as it's shown in the following snippet.
@@ -90,3 +130,59 @@ Generators are memory efficient (they are returning on demand) compared to the i
 
 ## OOP
 In this paradigm, every object in the real world is going to be modeled as a class in the digtial world. Relationships can be defined between classes, for example consider we want to develop a system for a university to keep the information of the university's staff. If we start with a "person" class and have first_name, last_name, birth_date, national_ID properties, and some getters and setters for them, in another class like professor, we can inheret these attributes and functions, and no need to write them again.
+
+```python
+class Person:
+    count = 0
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        Person.count = Person.count + 1
+
+    def get_name(self):
+        print('This object\'s name is %s'%self.name)
+
+    def get_age(self):
+        print('This object\'s age is %d'%self.age)
+
+    def get_info(self):
+        print('name: %s, age: %d'%(self.name, self.age))
+
+    def return_count_of_persons(self):
+        return Person.count
+
+    def __del__(self):
+        count = count - 1
+
+ehsan = Person('ehsan', 26)
+ehsan.get_name()
+ehsan.get_age()
+ehsan.get_info()
+
+john = Person("Johnny", 12)
+Ahmet = Person("Ahmet Kaya", 65)
+
+print("Number of persons: %d" % ehsan.return_count_of_persons())
+
+del Ahmet
+
+print("Number of persons: %d" % ehsan.return_count_of_persons())
+
+# output
+# This object's name is ehsan
+# This object's age is 26
+# name: ehsan, age: 26
+# Number of persons: 3
+# Number of persons: 2
+```
+
+For inheritance, we just put the name of the parent class in the child class.
+
+```python
+class Parent;
+    ...
+
+class Child(Parent):
+    ...
+```
+

@@ -186,3 +186,72 @@ class Child(Parent):
     ...
 ```
 
+Check the following examples to have a better vision in OOP:
+- [OOP Example 1](code/02-OOP/03-milk-impact.py)
+- [OOP Example 2](code/02-OOP/04-age_calculator.py)
+- [OOP Example 3](code/02-OOP/05-football_player.py)
+
+
+## Databases
+In this part, we aim at connecting mysql to python. First  of all, make sure that you have MySQL installed on your machine and you can connect it. with the following command in MySQL command line see what is going on:
+```sql
+show databases; -- to see the databases
+
+create database a_db_name_you_want_to_create; -- create a table
+
+use a_db_name_you_want_to_create; -- to switch in to the database 
+
+show tables; -- to see the tables in the database you are
+
+create table a_table_name (column1 column1_type, column2 column2_type, column3 column3_type, column4 column4_type, column5 column5_type, column6 column6_type, ...);
+
+-- example
+CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
+
+describe a_table_name; -- to see the description or schema of the table
+
+drop table a_table_name; -- to drop the table you created
+
+drop database a_db_name_you_want_to_create; -- to delete the database you created recently
+```
+
+Then install the python-connector package to be able to connect to your database from python code as follow:
+
+```python
+pip install mysql-connector
+
+pip install pymysql
+
+mysql-connector-python
+```
+
+Following snippet is what you interact easily with your databases through python code:
+
+```python
+import mysql.connector
+
+print("connecting to db")
+cnx = mysql.connector.connect(user='root', password='your_password', host='127.0.0.1',
+database='your_db_name')
+print("connected to db")
+
+cursor = cnx.cursor()
+cursor.execute("INSERT INTO pet values('cat', 'Akbar','mammal', 'f', '1994-07-12', '2009-12-12');")
+
+cursor.execute("select * from pet;")
+
+for element in cursor:
+    print(element)
+
+cnx.commit()
+
+cnx.close()
+
+# output
+# connecting to db
+# connected to db
+# ('Puffball', 'Diane', 'hamster', 'f', datetime.date(1999, 3, 30), None)
+# ('cat', 'Akbar', 'mammal', 'f', datetime.date(1994, 7, 12), datetime.date(2009, 12, 12))
+# ('cat', 'Akbar', 'mammal', 'f', datetime.date(1994, 7, 12), datetime.date(2009, 12, 12))
+```
+

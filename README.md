@@ -255,3 +255,8 @@ cnx.close()
 # ('cat', 'Akbar', 'mammal', 'f', datetime.date(1994, 7, 12), datetime.date(2009, 12, 12))
 ```
 
+Check other two examples from the links below:
+1. [A simple SQL order by example](code/03-DB/02-exercise1.py)
+2. [An email and password validator](code/03-DB/03-exercise2.py)
+
+## Web Scraping

@@ -73,11 +73,11 @@ while password_validation(password) != True:
     password = input(
         "Please Enter a valid password address containing digits and letters: ")
 
-print("connecting to db")
+# print("connecting to db")
 cnx = mysql.connector.connect(user='root', password='12345',
                               host='127.0.0.1',
                               database='test2')
-print("connected to db")
+# print("connected to db")
 
 
 cursor = cnx.cursor()

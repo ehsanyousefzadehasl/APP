@@ -259,4 +259,82 @@ Check other two examples from the links below:
 1. [A simple SQL order by example](code/03-DB/02-exercise1.py)
 2. [An email and password validator](code/03-DB/03-exercise2.py)
 
+Non-relational databases are for reducing the design and time of development a system. There are many different non-relational databases like MongoDB, and Cassabdra etc. We as developers just have to search and connect to our python, then change our data. It is simple enoguh at least for using them.
+
 ## Web Scraping
+The aim of this season is to read data from a website, and process or filter the information from it. First, we dive into **regex**, which is a requirement for this purpose to reduce our code size and also ease our work on working with strings. You can test your regex expressions online like [here](https://regex101.com/).
+
+- '.' means everything can be this character.
+- [] is for specifying or, for example [a, b, c] mentions that this character can be a or b or c.
+- \d -> digit
+- \w -> a,b,c,...,z,_
+- \s -> white space (tab, space, newline, etc.)
+- * -> from zero character to infinity
+- + -> at least one character
+- \ch -> it shoud ended with "ch" character
+- () -> grouping the desired part
+- [^] -> negator
+- ^ -> start of a line
+- $ -> end of a line
+- Some special characters: \t, \n, \r
+- {n} -> n specifies the number of characters
+- \ -> used for specifying the character that we want it to be in the regular expression like: \\.
+
+Some example with these:
+```python
+# 1 - a string with four character started, and ended with white spaces
+\s....\s
+
+# 2 - at least the desired string must have a "a" character: a, aa, aaa, aaaa, ...
+a+
+
+# 3 - no matter how many "a"s, from zero to infinity: "", a, aa, aaa, ...
+a*
+
+# 4 - detecing a email, what spammer do :D
+([^\s]+@[^\s]+)
+
+# The start of the line must have 1
+^1
+
+# Every thing except a and b
+[^ab]
+
+# Detects numbers in the beginning of a line
+(^\d+$)
+
+# For separating the firstname, middlename, and lastname - in some countries, people do not have middlename
+^(\w+)\.*(\w*)\.(\w+)
+```
+
+Regex is well-known for being greedy. We can make them to take life easier by using "?".
+
+```python
+# input: this is the 1st end. this is the 2nd end.
+this .*? end
+# output: this is the 1st end this is the 2nd end
+```
+### Regular Expression in Python
+The package that enables us to work with regular expression is "re", and we can import it easily as follows:
+
+```python
+import re
+```
+In python, we have three functions that we use them as shown below:
+
+```python
+re.search(r'our_regular_expression', the_string_that_we_want_to_process)
+
+re.findall(r'our_regular_expression', the_string_that_we_want_to_process)
+
+re.sub(r'our_regular_expression', the_string_that_we_want_to_be_substituted, the_string_we_want_to_be_processed)
+```
+
+### Request in Python for getting a webpage
+
+For reading the content of a webpage, we need just to work easily with request package in python by importing it.
+
+```python
+import request
+```
+

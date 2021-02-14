@@ -359,3 +359,53 @@ Now, result keeps the data received from the specified url (if successful: http 
 1. [Divar Example](code/04-Web-Scraping/02-divar_website_announcements_with_tag.py)
 2. [Truecar Example](code/04-Web-Scraping/03-truecar_analyzer.py)
 
+### Virtual Environment
+#### Motivation from Python Documents
+Python applications will often use packages and modules that don’t come as part of the standard library. Applications will sometimes need a specific version of a library, because the application may require that a particular bug has been fixed or the application may be written using an obsolete version of the library’s interface.
+
+This means it may not be possible for one Python installation to meet the requirements of every application. If application A needs version 1.0 of a particular module but application B needs version 2.0, then the requirements are in conflict and installing either version 1.0 or 2.0 will leave one application unable to run.
+
+The solution for this problem is to create a virtual environment, a self-contained directory tree that contains a Python installation for a particular version of Python, plus a number of additional packages.
+
+Different applications can then use different virtual environments. To resolve the earlier example of conflicting requirements, application A can have its own virtual environment with version 1.0 installed while application B has another virtual environment with version 2.0. If application B requires a library be upgraded to version 3.0, this will not affect application A’s environment [Reference](https://docs.python.org/3/tutorial/venv.html).
+
+We can create a virtual environment for our project with the following command:
+```python
+python -m venv name_of_the_ve
+```
+Then, with the following command, we can activate it (activation means when we install a package with a specific version, it will be installed here), or deactivate it.
+
+```python
+# activate
+source name_of_the_ve/Scripts/activate
+
+# simply just deactivate
+deactivate
+```
+In the following snippet, some command of pip for dealing with packages in python are listed, which knowing them equals to power in python (pip is a package manager). There was a search feature in pip allowing to search for packages, but these days because of the cost, it is down.
+
+```python
+# installing a package
+python -m pip install package_name
+
+# installing a specific version of a package
+python -m pip install package_name==package_version
+
+# upgrading a package
+python -m pip install --upgrade a_package
+
+# uninstalling a package
+pip uninstall a_package
+
+# Displaying information of a package
+pip show a_package
+
+# Listing all of the packages installed
+pip list
+
+# A list of packages installed in the virtual environment in the expected format by pip to be installed somewhere else
+pip freeze > requirements.txt
+
+# installing requirements of a project
+python -m pip install -r requirements.txt
+```

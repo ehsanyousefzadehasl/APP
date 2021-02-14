@@ -409,3 +409,21 @@ pip freeze > requirements.txt
 # installing requirements of a project
 python -m pip install -r requirements.txt
 ```
+
+### Django Web Framework
+It is a framework that eases and makes fast the development process of web applications. After building a virtual environment, the following command makes a project:
+
+```bash
+django-admin startproject project_name
+```
+Then, after going to the main directory of the created project, it can be run by the following command:
+```bash
+python manage.py runserver 127.0.0.1:8080
+```
+Now, the web application serves at the specified url.
+
+With the following command an app can be created.
+```bash
+python manage.py startapp blog
+```
+

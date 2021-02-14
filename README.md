@@ -217,7 +217,7 @@ drop database a_db_name_you_want_to_create; -- to delete the database you create
 
 Then install the python-connector package to be able to connect to your database from python code as follow:
 
-```bash
+```python
 pip install mysql-connector
 
 pip install pymysql
@@ -370,12 +370,12 @@ The solution for this problem is to create a virtual environment, a self-contain
 Different applications can then use different virtual environments. To resolve the earlier example of conflicting requirements, application A can have its own virtual environment with version 1.0 installed while application B has another virtual environment with version 2.0. If application B requires a library be upgraded to version 3.0, this will not affect application A’s environment [Reference](https://docs.python.org/3/tutorial/venv.html).
 
 We can create a virtual environment for our project with the following command:
-```bash
+```python
 python -m venv name_of_the_ve
 ```
 Then, with the following command, we can activate it (activation means when we install a package with a specific version, it will be installed here), or deactivate it.
 
-```bash
+```python
 # activate
 source name_of_the_ve/Scripts/activate
 
@@ -384,7 +384,7 @@ deactivate
 ```
 In the following snippet, some command of pip for dealing with packages in python are listed, which knowing them equals to power in python (pip is a package manager). There was a search feature in pip allowing to search for packages, but these days because of the cost, it is down.
 
-```bash
+```python
 # installing a package
 python -m pip install package_name
 
@@ -409,28 +409,3 @@ pip freeze > requirements.txt
 # installing requirements of a project
 python -m pip install -r requirements.txt
 ```
-
-
-### Web Development with Python
-For ease of developing a website, especially its backend side, we can use a popular python framework for this purpose named "[Django](https://www.djangoproject.com/)". We can install it easily with the following command (try to do it in a virtual environment you create first):
-
-```bash
-pip install django
-```
-After installing Django in the virtual environment, a new django project can be made (after activating the virtual environment) by the following command:
-```bash
-django-admin startproject project_name
-```
-**Note**: If you deactivate the virtual environment, the command above will not work because it is installed just in that virtual environment.
-
-In the main directory of the project, there is a file named "manage.py" which can be used for serving the project on a port for test and development purposes:
-```bash
-# building an app in django
-python manage.py startapp blog
-
-# running the project
-python manage.py runserver 127.0.0.1:8080
-```
-### Machine Learning with Python
-
-### Security with Python

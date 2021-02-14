@@ -329,12 +329,33 @@ re.findall(r'our_regular_expression', the_string_that_we_want_to_process)
 
 re.sub(r'our_regular_expression', the_string_that_we_want_to_be_substituted, the_string_we_want_to_be_processed)
 ```
+[A very simple email validator Example](code/04-Web-Scraping/01-very-simple-email-checker.py)
 
 ### Request in Python for getting a webpage
 
-For reading the content of a webpage, we need just to work easily with request package in python by importing it.
+For reading the content of a webpage, we need just to work with request package in python easily just by importing it.
 
 ```python
-import request
+import requests
 ```
+However, it is not a built-in package int the language, so you have to install it first:
+
+```python
+pip install requests
+```
+
+Then, just get the content of a url as follows:
+
+```python
+import requests
+
+result = requests.get('https://github.com')
+
+print(result.text)
+```
+
+Now, result keeps the data received from the specified url (if successful: http status code: 200). The text attribute keeps the html code of the response, which we can use for our processing goals, for example by using regext. But, there is a package that makes our lives easier: "**Beautiful Soup**". Check the following example, which the first one reads a page content and provides link to desired posts, and the second one stores price and miles of second-hand cars in a database table.
+
+1. [Divar Example](code/04-Web-Scraping/02-divar_website_announcements_with_tag.py)
+2. [Truecar Example](code/04-Web-Scraping/03-truecar_analyzer.py)
 

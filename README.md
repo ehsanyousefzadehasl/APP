@@ -340,7 +340,7 @@ import requests
 ```
 However, it is not a built-in package int the language, so you have to install it first:
 
-```python
+```shell
 pip install requests
 ```
 
@@ -375,7 +375,7 @@ python -m venv name_of_the_ve
 ```
 Then, with the following command, we can activate it (activation means when we install a package with a specific version, it will be installed here), or deactivate it.
 
-```python
+```shell
 # activate
 source name_of_the_ve/Scripts/activate
 
@@ -384,7 +384,7 @@ deactivate
 ```
 In the following snippet, some command of pip for dealing with packages in python are listed, which knowing them equals to power in python (pip is a package manager). There was a search feature in pip allowing to search for packages, but these days because of the cost, it is down.
 
-```python
+```shell
 # installing a package
 python -m pip install package_name
 
@@ -413,17 +413,111 @@ python -m pip install -r requirements.txt
 ### Django Web Framework
 It is a framework that eases and makes fast the development process of web applications. After building a virtual environment, the following command makes a project:
 
-```bash
+```shell
 django-admin startproject project_name
 ```
 Then, after going to the main directory of the created project, it can be run by the following command:
-```bash
+```shell
 python manage.py runserver 127.0.0.1:8080
 ```
 Now, the web application serves at the specified url.
 
 With the following command an app can be created.
-```bash
+```shell
 python manage.py startapp blog
+```
+
+The urls.py of the created app:
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index')
+]
+```
+The response to this route is provided in the views.py as follows:
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def index(request):
+    return  HttpResponse("Hi There! This is the first message in Django!")
+```
+
+Then, this route must be detected by the main project so:
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls'))
+]
+```
+Models are concepts that ease the interaction with databases. We can define a model in our app in models.py as follows:
+```python
+from django.db import models
+
+# Create your models here.
+class Post:
+    text = models.CharField(max_length=500) 
+```
+First, we have to add the app in settings.py. Then, we have to run the follwing command from manage.py:
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # where we added our app
+    'blog.apps.BlogConfig'
+]
+```
+
+```bash
+python manage.py makemigrations blog
+# output
+# Migrations for 'blog':
+#   blog\migrations\0001_initial.py
+#     - Create model Post
+```
+Then,
+```shell
+python manage.py migrate
+```
+For being able to login to the admin panel, superuser have to be created:
+```shell
+(winpty) python manage.py createsuperuser 
+```
+Now, we can login into the django panel. However, we cannot find the model we created because we did not make it known to the admin by registering, so:
+
+```python
+from django.contrib import admin
+
+from blog.models import Post
+# Register your models here.
+
+admin.site.register(Post)
+```
+
+Now, we can add to it through the panel. We can read all of the objects in our model as shown below:
+```python
+from blog.models import Post
+# Create your views here.
+def index(request):
+    # return  HttpResponse("Hi There! This is the first message in Django!")
+    all_post = Post.objects.all()
+    to_ret = '<body>'
+    for post in all_post:
+        to_ret = to_ret + '<p>' + post.text + '</p>'
+        to_ret = to_ret + '<hr>'
+
+    to_ret = to_ret + '</body>'
+    return HttpResponse(to_ret)
 ```
 

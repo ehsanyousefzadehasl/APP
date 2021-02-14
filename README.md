@@ -521,3 +521,6 @@ def index(request):
     return HttpResponse(to_ret)
 ```
 
+### Machine Learning with Python
+One of libraries that makes working in this area fast and east is "[scikit-learn](https://scikit-learn.org/stable/)". In this package, most of machine learning concepts like classification, regression, clustering, dimensionality reduction, etc. are available.
+

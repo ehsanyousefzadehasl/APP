@@ -535,3 +535,4 @@ The second example is house price estimator based on house specifications. Check
 They are examples just to see how easy is ML in Python! I will try to add more absorbing example here later when I study this intriguing course!
 
 ### Security in Python
+Learning about security can open new doors to us as computer engineers because we are going to understand concepts we learned during different courses in our bachelor's, which we did not have any sense about them: like networks, operating systems, encryptions, etc. Python for Offensive PenTest might be a good start.

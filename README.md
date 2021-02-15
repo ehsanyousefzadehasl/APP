@@ -524,3 +524,8 @@ def index(request):
 ### Machine Learning with Python
 One of libraries that makes working in this area fast and east is "[scikit-learn](https://scikit-learn.org/stable/)". In this package, most of machine learning concepts like classification, regression, clustering, dimensionality reduction, etc. are available.
 
+We can install it with the following command:
+```shell
+pip install -U scikit-learn
+```
+The example with which we want to see the python ability in ML area is trying to guess the price of laptop based on its specification. We use the dataset prepared [here](https://www.kaggle.com/ionaskel/laptop-prices). In our simple model, we just use inches, ram, weight, and price as inputs to our algorithm. You can check the code [here](code/05-Modern_World/03-ML/laptop_price_estimator.py).

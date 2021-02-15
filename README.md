@@ -528,4 +528,10 @@ We can install it with the following command:
 ```shell
 pip install -U scikit-learn
 ```
-The example with which we want to see the python ability in ML area is trying to guess the price of laptop based on its specification. We use the dataset prepared [here](https://www.kaggle.com/ionaskel/laptop-prices). In our simple model, we just use inches, ram, weight, and price as inputs to our algorithm. You can check the code [here](code/05-Modern_World/03-ML/laptop_price_estimator.py).
+The example with which we want to see the python ability in ML area is trying to guess the price of laptop based on its specification. We use the dataset prepared [here](https://www.kaggle.com/ionaskel/laptop-prices). In our simple model, we just use inches, ram, weight, and price as inputs to our algorithm. You can check the code [here](code/05-Modern_World/03-ML/Laptop_price_estimator/laptop_price_estimator.py).
+
+The second example is house price estimator based on house specifications. Check it [here](code/05-Modern_World/03-ML/House_price_estimator/house_price_estimator.py).
+
+They are examples just to see how easy is ML in Python! I will try to add more absorbing example here later when I study this intriguing course!
+
+### Security in Python

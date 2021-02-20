@@ -109,17 +109,31 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
             if post_fuel_result != None:
                 fuel = post_fuel_result.group(1)
-                print(brand, model, year, cleaned_price, cleaned_usage, gear_box, fuel)
             else:
                 continue
 
             # body_condition
+            body_condition_regex = r'<p>\s*<span\s*class="label">بدنه\s*<\/span>\s*<span>\s*(.*)\s*<\/span>\s*<\/p>'
+            post_body_condition_result = re.search(body_condition_regex, str(post_soup))
+
+            if post_body_condition_result != None:
+                body_condition = post_body_condition_result.group(1)
+                print(brand, model, year, cleaned_price, cleaned_usage, gear_box, fuel, body_condition)
+            else:
+                continue
+
             # color
+
             # province
+
             # motor_volume
+
             # number_of_cylinder
+
             # acceleration
+
             # fuel_usage
+            
         # Then, each of the above mentioned will go into our database
         # Our database has the following tables
         # province

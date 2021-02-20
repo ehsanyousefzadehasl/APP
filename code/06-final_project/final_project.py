@@ -153,6 +153,15 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
 
             # number_of_cylinder
+            num_of_cylinder_regex = r'<li class="ad-detail-spec-10">\s*<span\s*class="dark-text">پیشرانه<\/span>\s*<span>(.*)\sسیلندر.*<\/span>\s*<\/li>'
+            post_num_of_cylinders = re.search(num_of_cylinder_regex, str(post_soup))
+
+            if post_num_of_cylinders != None:
+                number_of_cylinders = post_num_of_cylinders.group(1)
+                print(number_of_cylinders)
+            else:
+                continue
+
 
             # acceleration
 

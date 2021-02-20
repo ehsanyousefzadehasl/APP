@@ -91,11 +91,18 @@ for i in range(1, number_of_pages_to_scrape + 1):
             if post_usage_exact_result != None:
                 usage = post_usage_exact_result.group(1)
                 cleaned_usage = number_comma_cleaner(usage)
-                print(brand, model, year, cleaned_price, cleaned_usage)
             else:
                 continue
 
             # gear_box
+            gear_box_regex = r'<p>\s*<span\s*class="label">گیربکس\s*<\/span>\s*<span>\s*(.*)\s*<\/span>\s*<\/p>'
+            post_gear_box_result = re.search(gear_box_regex, str(post_soup))
+            if post_gear_box_result != None:
+                gear_box = post_gear_box_result.group(1)
+                print(brand, model, year, cleaned_price, cleaned_usage, gear_box)
+            else:
+                continue
+
         # Then, each of the above mentioned will go into our database
         # Our database has the following tables
         # province

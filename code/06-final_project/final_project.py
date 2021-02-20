@@ -118,22 +118,46 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
             if post_body_condition_result != None:
                 body_condition = post_body_condition_result.group(1)
-                print(brand, model, year, cleaned_price, cleaned_usage, gear_box, fuel, body_condition)
             else:
                 continue
 
             # color
+            color_regex = r'<p>\s*<span\s*class="label">رنگ\s*<\/span>\s*<span>\s*<f>(.*?)<\/f>'
+            post_color_result = re.search(color_regex, str(post_soup))
+
+            if post_color_result != None:
+                color = post_color_result.group(1)
+            else:
+                continue
+
+
 
             # province
+            province_regex = r'<p>\s*<span\s*class="label">استان\s*<\/span>\s*<span>\s*(.*)\s*<\/span>\s*<\/p>'
+            post_province_result = re.search(province_regex, str(post_soup))
+
+            if post_province_result != None:
+                province = post_province_result.group(1)
+            else:
+                continue
+
 
             # motor_volume
+            motor_volume_regex = r'<li class="ad-detail-spec-11">\s*<span\s*class="dark-text">حجم موتور<\/span>\s*<span>(.*)لیتر<\/span>\s*<\/li>'
+            post_motor_volume_result = re.search(motor_volume_regex, str(post_soup))
+
+            if post_motor_volume_result != None:
+                motor_volume = post_motor_volume_result.group(1)
+            else:
+                continue
+
 
             # number_of_cylinder
 
             # acceleration
 
             # fuel_usage
-            
+
         # Then, each of the above mentioned will go into our database
         # Our database has the following tables
         # province

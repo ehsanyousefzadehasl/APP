@@ -75,11 +75,27 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
 
             # brand, model, year
+            brand_model_year_regex = r'<h1.*>\s*<span>(.*?)<\/span>\s<span>(.*?)<\/span><span>‏<\/span>\s.*<span>.*?<\/span>\s<span\sdatetime="(.*)">'
+            post_brand_model_year_exact_result = re.search(
+                brand_model_year_regex, str(post_soup))
             
-        # We have to have different regular expressions forextracting these features
+            if post_brand_model_year_exact_result != None:
+                brand, model, year = post_brand_model_year_exact_result.group(1), post_brand_model_year_exact_result.group(2), post_brand_model_year_exact_result.group(3)
+            else:
+                continue
         
+            post_usage_regex = r'<p>\s*<span\sclass="label">كاركرد\s*<\/span>\s*<span>\s*(.*)\sکیلومتر\s*<\/span>\s*<\/p>'
+            post_usage_exact_result = re.search(
+                post_usage_regex, str(post_soup))
+            
+            if post_usage_exact_result != None:
+                usage = post_usage_exact_result.group(1)
+                cleaned_usage = number_comma_cleaner(usage)
+                print(brand, model, year, cleaned_price, cleaned_usage)
+            else:
+                continue
 
-
+            # gear_box
         # Then, each of the above mentioned will go into our database
         # Our database has the following tables
         # province

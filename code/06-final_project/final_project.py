@@ -158,15 +158,27 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
             if post_num_of_cylinders != None:
                 number_of_cylinders = post_num_of_cylinders.group(1)
-                print(number_of_cylinders)
             else:
                 continue
 
-
             # acceleration
+            acceleration_regex = r'<li class="ad-detail-spec-14">\s*<span class="dark-text">شتاب<\/span>\s*<span>(.*)ثانیه<.span>\s*<\/li>'
+            post_acceleration = re.search(acceleration_regex, str(post_soup))
+
+            if post_acceleration != None:
+                acceleration = post_acceleration.group(1)
+            else:
+                continue
 
             # fuel_usage
+            fuel_usage_regex = r'<li class="ad-detail-spec-16">\s*<span class="dark-text">مصرف ترکیبی<\/span>\s*<span>(.*)\sلیتر'
+            post_fuel_usage_result = re.search(fuel_usage_regex, str(post_soup))
 
+            if post_fuel_usage_result != None:
+                fuel_usage = post_fuel_usage_result.group(1)
+                print(fuel_usage)
+            else:
+                continue
         # Then, each of the above mentioned will go into our database
         # Our database has the following tables
         # province

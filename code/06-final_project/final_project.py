@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import mysql.connector
 
 def number_comma_cleaner(number):
     temp_list = number.split(',')
@@ -11,12 +12,14 @@ def number_comma_cleaner(number):
     # print(tmp)
     return int(tmp)
 
+
+
 number_of_pages_to_scrape = 2
 main_url = "https://bama.ir/car/all-brands/all-models/all-trims?page="
 
 # This loop for reading from the pages
 # Then, extracting link of each post 
-for i in range(1, number_of_pages_to_scrape + 1):
+for i in range(100, 99 + number_of_pages_to_scrape + 1):
     result = requests.get(main_url + str(i))
 
     # print("$$$$$$$$$$$$$$$$$$$$$$ ------------------page_number: ", i)
@@ -59,7 +62,7 @@ for i in range(1, number_of_pages_to_scrape + 1):
         if post_price_check_result == None:
             # print("No Price tag")
             # So, we will skip it
-            pass
+            continue
         else:
             # print("it seems that this post has a price tag")
             # So, first of all, we extract and clean the price
@@ -83,7 +86,59 @@ for i in range(1, number_of_pages_to_scrape + 1):
                 brand, model, year = post_brand_model_year_exact_result.group(1), post_brand_model_year_exact_result.group(2), post_brand_model_year_exact_result.group(3)
             else:
                 continue
-        
+            
+            # Using a brand's number or storing then retrieving the model's assigned number
+            cnx = mysql.connector.connect(user='root', password='12345',
+                                        host='127.0.0.1',
+                                        database='car_price_prediction')
+            print("connected to model table")
+            cursor = cnx.cursor(buffered=True)
+            cursor.execute('select id from model where model_name LIKE "%' + model + '%";')
+
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                model_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute('insert into model (model_name) values("%s")'% model)
+
+                cursor.execute('select id from model where model_name LIKE "%' + model + '%";')
+
+                result = cursor.fetchone()
+
+                model_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
+
+            cursor.execute('select id from brand where brand_name LIKE "%' + brand + '%";')
+
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                brand_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute(
+                    'insert into brand (brand_name) values("%s")' % brand)
+
+                cursor.execute(
+                    'select id from brand where brand_name LIKE "%' + brand + '%";')
+
+                result = cursor.fetchone()
+
+                brand_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
+
+
+
+
+
             post_usage_regex = r'<p>\s*<span\sclass="label">كاركرد\s*<\/span>\s*<span>\s*(.*)\sکیلومتر\s*<\/span>\s*<\/p>'
             post_usage_exact_result = re.search(
                 post_usage_regex, str(post_soup))
@@ -102,7 +157,30 @@ for i in range(1, number_of_pages_to_scrape + 1):
                 gear_box = post_gear_box_result.group(1)
             else:
                 continue
-            
+
+            cursor.execute(
+                'select id from gear_box where gear_box LIKE "%' + gear_box + '%";')
+
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                gear_box_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute(
+                    'insert into gear_box (gear_box) values("%s")' % gear_box)
+
+                cursor.execute(
+                    'select id from gear_box where gear_box LIKE "%' + gear_box + '%";')
+
+                result = cursor.fetchone()
+
+                gear_box_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
+
             # fuel
             fuel_regex = r'<p>\s*<span\s*class="label">سوخت\s*<\/span>\s*<span>\s*(.*)\s*<\/span>\s*<\/p>'
             post_fuel_result = re.search(fuel_regex, str(post_soup))
@@ -121,6 +199,28 @@ for i in range(1, number_of_pages_to_scrape + 1):
             else:
                 continue
 
+            cursor.execute(
+                'select id from body_condition where body_condition LIKE "%' + body_condition + '%";')
+
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                body_condition_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute(
+                    'insert into body_condition (body_condition) values("%s")' % body_condition)
+
+                cursor.execute(
+                    'select id from body_condition where body_condition LIKE "%' + body_condition + '%";')
+
+                result = cursor.fetchone()
+
+                body_condition_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
             # color
             color_regex = r'<p>\s*<span\s*class="label">رنگ\s*<\/span>\s*<span>\s*<f>(.*?)<\/f>'
             post_color_result = re.search(color_regex, str(post_soup))
@@ -130,7 +230,27 @@ for i in range(1, number_of_pages_to_scrape + 1):
             else:
                 continue
 
+            cursor.execute('select id from color where color LIKE "%' + color + '%";')
 
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                color_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute(
+                    'insert into color (color) values("%s")' % color)
+
+                cursor.execute(
+                    'select id from color where color LIKE "%' + color + '%";')
+
+                result = cursor.fetchone()
+
+                color_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
 
             # province
             province_regex = r'<p>\s*<span\s*class="label">استان\s*<\/span>\s*<span>\s*(.*)\s*<\/span>\s*<\/p>'
@@ -141,6 +261,28 @@ for i in range(1, number_of_pages_to_scrape + 1):
             else:
                 continue
 
+            cursor.execute(
+                'select id from province where province LIKE "%' + province + '%";')
+
+            # now, if it is none, we will detect and write, then read and use its id
+            result = cursor.fetchone()
+
+            if result != None:
+                province_integered = result[0]
+            # print(model_integered) # so we could find it
+            else:
+                # insert
+                cursor.execute(
+                    'insert into province (province) values("%s")' % province)
+
+                cursor.execute(
+                    'select id from province where province LIKE "%' + province + '%";')
+
+                result = cursor.fetchone()
+
+                province_integered = result[0]
+                # print(model_integered)
+                cnx.commit()
 
             # motor_volume
             motor_volume_regex = r'<li class="ad-detail-spec-11">\s*<span\s*class="dark-text">حجم موتور<\/span>\s*<span>(.*)لیتر<\/span>\s*<\/li>'
@@ -176,19 +318,101 @@ for i in range(1, number_of_pages_to_scrape + 1):
 
             if post_fuel_usage_result != None:
                 fuel_usage = post_fuel_usage_result.group(1)
-                print(fuel_usage)
+                # print(fuel_usage)
             else:
                 continue
+
         # Then, each of the above mentioned will go into our database
+
+            # print("Connecting to db")
+            # cnx = mysql.connector.connect(user='root', password='12345',
+            #                             host='127.0.0.1',
+            #                             database='car_price_prediction')
+            # print("connected to db")
+            cursor.execute("insert into complete_information (brand, model, year, price, usage_miles, gearbox, fuel, body_condition, color, province, motor_volume, num_of_cylinder, acceleration, fuel_usage) values('%s', '%s', %d, %d, %d, '%s', '%s', '%s', '%s', '%s', %f, %d, %f, %f);" % (brand, model, int(year), int(cleaned_price), int(cleaned_usage), gear_box, fuel, body_condition, color, province, float(motor_volume), int(number_of_cylinders), float(acceleration), float(fuel_usage)))
+            cursor.execute("insert into training_data (brand, model, year, price, usage_miles, gear_box, body_condition, color, province, motor_volume, num_of_cylinders, acceleration, fuel_usage) values('%d', '%d', %d, %d, %d, '%d', '%d', '%d', '%d', %f, %d, %f, %f);" % (
+                int(brand_integered), int(model_integered), int(year), int(cleaned_price), int(cleaned_usage), int(gear_box_integered), int(body_condition_integered), int(color_integered), int(province_integered), float(motor_volume), int(number_of_cylinders), float(acceleration), float(fuel_usage)))
+            cnx.commit()
+            cnx.close()   
+        # For keeping the data needed for model training; all number
+        # cars_data
+
+# print("Connecting to db")
+# cnx = mysql.connector.connect(user='root', password='12345',
+#                                         host='127.0.0.1',
+#                                         database='car_price_prediction')
+# print("connected to db")
+# cursor = cnx.cursor()
+# cursor.execute("select * from complete_information;")
+
+# for row in cursor:
+#     print(row)
+# cnx.commit()
+# cnx.close()
+
         # Our database has the following tables
-        # province
+
+        # Tables for mapping to numbers purpose
         # car brand
         # car model
-        # color
-        # body_condition
         # gear_box
-        # cars_data
+        # body_condition
+        # color
+        # province
+
+        # car brand table
+        # --------------
+        # | id | brand |
+        # --------------
+
+        # first, we have to read from the complete_information table
+        # then, filling our database, and in another program, we will use that 
+        # database for training our model
         
-        # We consider the tables above (meanign all except the last one)
-        # to be able to represent all of our data with numbers to later giving them
-        # to the model to be trained based on them
+# SQLs to create and test the tables on MySQL database
+#         create table complete_information(
+#             id int not null auto_increment primary key,
+#             brand varchar(50) NOT NULL,
+#             model varchar(50) NOT NULL,
+#             year MEDIUMINT NOT NULL,
+#             price int not null,
+#             usage_miles int not null,
+#             gearbox smallint not null,
+#             fuel varchar(50) not null,
+#             body_condition varchar(50) not null,
+#             color varchar(50) not null,
+#             province varchar(50) not null,
+#             motor_volume float(4, 2) not null,
+#             num_of_cylinder smallint not null,
+#             acceleration float(6, 2) not null,
+#             fuel_usage float(6, 2) not null);
+
+# insert into complete_information(brand, model, year, price, usage_miles, gearbox, fuel, body_condition, color, province, motor_volume, num_of_cylinder, acceleration, fuel_usage) values('سایپا', 'پراید ۱۰۱', 1395, 98000000, 23000, 6, 'بنزین', 'بدون رنگ', 'سفید', 'تهران', 4.2, 5, 12.23, 9.2)
+
+#  create table brand(
+#      id int auto_increment not null primary key,
+#      brand_name varchar(50) not null);
+
+
+#  create table model(
+#     id int autoincrement not null primary key,
+#      model_name varchar(50) not null);
+
+# create table gear_box(
+#     id int auto_increment not null primary key,
+#     gear_box varchar(50) not null);
+
+# mysql> create table body_condition(
+#     -> id int auto_increment not null primary key,
+#     -> body_condition varchar(50) not null);
+
+# create table color (
+#     id int auto_increment not null primary key,
+#     color varchar(50) not null);
+
+# mysql> create table province(
+#     -> id int auto_increment not null primary key,
+#     -> province varchar(50) not null);
+
+
+#  alter table training_data modify price bigint

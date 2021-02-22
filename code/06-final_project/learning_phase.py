@@ -6,17 +6,21 @@ import mysql.connector
 
 x = []
 y = []
-# bedrooms	bathrooms	sqft_living	sqft_lot	floors	view	condition	sqft_above	sqft_basement	yr_built	yr_renovated	price
-with open('data.csv', 'r') as csvfile:
-    data = csv.reader(csvfile)
-    for line in data:
-        x.append(line[0:11])
-        y.append(line[11])
+cnx = mysql.connector.connect(user='root', password='12345', host='127.0.0.1', database='car_price_prediction')
+cursor = cnx.cursor(buffered=True)
+
+cursor.execute('select * from training_data;')
+for row in cursor:
+    x.append(row[0:3] + row[4:14])
+    y.append(row[3])
+
 
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(x, y)
 
-new_data = [[10, 5, 150000, 10000, 4, 5, 5, 2500, 1000, 3500, 0]]
+# (brand, model, year, usage_miles, gear_box, body_condition, color,
+#  province, motor_volume, num_of_cylinders, acceleration, fuel_usage)
+new_data = [[6, 16, 1399, 450000, 2, 4, 4, 1, 2.8, 6, 20, 10]]
 answer = clf.predict(new_data)
 
 print(answer)

@@ -538,4 +538,4 @@ They are examples just to see how easy is ML in Python! I will try to add more a
 Learning about security can open new doors to us as computer engineers because we are going to understand concepts we learned during different courses in our bachelor's, which we did not have any sense about them: like networks, operating systems, encryptions, etc. Python for Offensive PenTest might be a good start.
 
 ### Final Project
-In the final project of this course, a cool program implemented that scrapes information from bama.ir, then filling the database with them information. In this phase, the focus was on avoiding keeping the duplicate data, so primary key defined in fulfilling that goal. Then, used a tree model to train that and predict an input car's price. You can see the project's source code [here](code/06-final_project/README.md).
+In the final project of this course, a cool program implemented that scrapes information from bama.ir, then filling the database with them information. Then, used a tree model to train that and predict an input car's price. Figure our more about it [here](code/06-final_project/README.md).

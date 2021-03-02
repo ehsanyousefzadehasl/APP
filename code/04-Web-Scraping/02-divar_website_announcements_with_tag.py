@@ -12,17 +12,17 @@ soup = BeautifulSoup(result.text, 'html.parser')
 
 res = soup.find_all('a', attrs={'class': 'kt-post-card'})
 
-regular_expr = r'(.*<div class="kt-post-card__top-description kt-post-card-description">توافقی</div>.*)'
+# print(res)
+
+regular_expr = r'(<div class="kt-post-card__description">توافقی<\/div>)'
 link_reg_expr = r'href="(.*?)"'
 for e in res:
     # print(str(e))
-    # print("===========")
-    # print(e.children)
     result = re.search(regular_expr, str(e))
     if result != None:
         print(e.text)
         link = re.search(link_reg_expr, str(e))
-        print("https://divar.ir/" + str(link.group(0))[7:len(link.group(0))-1])
+        print("https://divar.ir" + str(link.group(1)))
         print("--------")
 
 

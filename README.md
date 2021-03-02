@@ -539,3 +539,13 @@ Learning about security can open new doors to us as computer engineers because w
 
 ### Final Project
 In the final project of this course, a cool program implemented that scrapes information from bama.ir, then filling the database with them information. Then, used a tree model to train that and predict an input car's price. Figure our more about it [here](code/06-final_project/README.md).
+
+
+## Some tips to write better code
+1. Try to add description to each function you develope and refactor it. So, whenever another programmer or yourself after a while to apply some changes to the code, the understanding process of the code will be easy and fast.
+```python
+def function_name(function_arguments):
+    """
+    1. Write about what the function does
+    2. Try to provide an example
+    """

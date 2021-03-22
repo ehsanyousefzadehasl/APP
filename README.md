@@ -549,3 +549,44 @@ def function_name(function_arguments):
     1. Write about what the function does
     2. Try to provide an example
     """
+```
+
+## Parallel Computing in Python
+Here, we will learn how to write parallel programs with python. To start with, according to Flynn's taxonomy, there are 4 parallel architecutres:
+1. SISD (Single Instruction Single Data)
+    - Uniprocessors
+2. SIMD (Single Instruction Multiple Data)
+    - Special instruction in x86 ISA 
+3. MISD (Multiple Instruction Single Data)
+    - An uncommon architecture
+4. MIMD (Multiple Instruction Multiple Data)
+    - Multi-core superscalar processors, distributed systems 
+
+
+
+
+
+
+## Hashing in Python
+Hashing functions are used in security field. The following two snippets show how to used sha256 and keccak_512 hashing functions in python. This is just for showing how to do hashing. More reading for specific goals are definitely required. 
+
+```python
+from hashlib import sha256
+
+hashedJohnDoe = sha256("John Doe".encode())
+
+print(hashedEhsan.hexdigest())
+```
+
+```bash
+pip install pysha3
+```
+
+```python
+import sha3
+
+k = sha3.keccak_512("John Doe".encode())
+
+print(k.hexdigest())
+```
+

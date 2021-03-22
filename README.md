@@ -575,7 +575,7 @@ from hashlib import sha256
 
 hashedJohnDoe = sha256("John Doe".encode())
 
-print(hashedEhsan.hexdigest())
+print(hashedJohnDoe.hexdigest())
 ```
 
 ```bash

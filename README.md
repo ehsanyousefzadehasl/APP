@@ -542,7 +542,9 @@ In the final project of this course, a cool program implemented that scrapes inf
 
 
 ## Some tips to write better code
-1. Try to add description to each function you develope and refactor it. So, whenever another programmer or yourself after a while to apply some changes to the code, the understanding process of the code will be easy and fast.
+1. Try to add description to each function you develope and refactor it. So, whenever another programmer or yourself, after a while, decide to apply some changes to the source code, the manipulation process of the code will be easy and fast.
+
+
 ```python
 def function_name(function_arguments):
     """
@@ -550,6 +552,8 @@ def function_name(function_arguments):
     2. Try to provide an example
     """
 ```
+
+---
 
 ## Parallel Computing in Python
 Here, we will learn how to write parallel programs with python. To start with, according to Flynn's taxonomy, there are 4 parallel architecutres:
@@ -560,13 +564,97 @@ Here, we will learn how to write parallel programs with python. To start with, a
 3. MISD (Multiple Instruction Single Data)
     - An uncommon architecture
 4. MIMD (Multiple Instruction Multiple Data)
-    - Multi-core superscalar processors, distributed systems 
+    - Multi-core superscalar processors, distributed systems
 
+### SISD
+On a SISD machine like a uniprocessor, the exexution of each instruction can be represented with a sequence of three steps: **Fetch**, **Decode**, **Execute**. These architectures are sequential because they can finish an instruction execution at an instant. They do not have any parallelism in terms of the execution of their instruction.
 
+### MISD
+The following figure can give you a sense of what the MISD architecture is. This architecture, due to its limited practicability, did not find space on the commercial sector.
 
+![MISD Architecture](img/MISD_architecture.jpg)
 
+### SIMD
+A SIMD computer consists of #n identical processors, each with its own local memory, where it is possible to store data. The Processors work simultaneously on each step and execute the same instruction, but on different data elements.
 
+### MIMD
+The following figure can you a view on what the MIMD architecture is. In this architecture, every processor has its own data and control flow. From modern processors in our laptop computers to data center processors and super-computers, all of them follow this architecture.
 
+![MIMD Architecture](img/MIMD_architecture.jpg)
+
+The memory organization categorization in MIMD architecture is shown in the following figure.
+
+![Memory organization of MIMD architecture](img/Memory_Organization_MIMD_Architecture.jpg)
+
+The shared memory architecture schema
+
+![shared memory architecture schema](img/shared_memory_architecture_schema.jpg)
+
+The most advantageous feature of shared memory architecture is that data sharing is fast.
+
+Furthermore, the synchronization is made possible by controlling the access of processors to the shared memory.
+
+The memory organization in MIMD architecture:
+1. **Uniform Memory Access (UMA)**: the access time of any processor to any area of the memory constant. These systems are also called **Symmetric Multiprocessor**. These systems are easy to implement, but they are not scalable. The programmer is responsible for the management synchronization by inserting appropriate controls, semaphores, locks etc.
+
+2. **Non-Uniform Memory Access (NUMA)**: These systems are also called **Distributed Shared Memory Systems (DSM)**. These architectures divide the memory into a high speed access area that is assigned to each processor, and a common area for data exchange with slower access. The scalability of these system is high, but implementing them is hard.
+
+3. **NO Remote Memory Access (NORMA)**: In these architecture, the memory is distributed among the processors, which is called local memory. All local memories are private (Only can be accessed by the local processor). Data exchange (communication) is accomplished by a message-passing communication protocol.
+
+4. **Cache Only Memory Access (COMA)**: These architectures are data-duplicate-free versions of NUMA architectures. Every processor has its own private cache memory. Moreover, the data exchange (communication) is performed through a message-passing communication protocol.
+
+The following figure shows the distributed memory architecture.
+
+![Distributed Memory Architecture](img/Distributed_Memory_Architecture.jpg)
+
+In these systems, every node (Processor + Cache | Memory | I/O) is an independent system. There is no limit to the number of processors and conflicts at the communication level. There is no cache coherency issue in these architectures.
+
+We can list some of the disadvantages of these architecture as follows:
+1. The communication between processors is difficult to implement.
+2. For data exchange, two processors should exchange messages via the message-passing protocol
+3. Building and sending messages takes time
+4. Processor stops in order to manage the messages received from other processors
+
+Note that synchronization in these architectures is achieved by moving data between processors. Additionally, the subdivision of data in the local memories affects the performance of the system due to the fact that the subdivision affect how much data will be moved between processors.
+
+### MPP (Massively Parallel Processors) machines
+These machines are composed of hundreds of processors that are connected by a communication network. The fastest computers in the workds are based on these architecture like Blue Gene super-computer, ASCI White, ASCI Red, ASCI Purple, and Red Storm super-computers.
+
+### A Cluster of Workstation Architecture
+These processing systems are based on classic computers connected by a communication network. The used doesn't know anything about the number of workstations working together, just a single computer. There are three types of clusters:
+
+![Cluster of Workstations](img/Cluster_of_workstations.jpg)
+
+1. **The fail-over cluster**: In this system, the nodes activity is monitored continuously, and when one stops working another machine takes the responsibility to execute. Due to the redundancy in this architecture, the quality of service is high.
+2. **The load balancing cluster**: In this system, a job request is sent to a node that has less activity. This ensures that the less time is taken to complete a processing.
+3. **The high-performance computing cluster**: In this system, each node is configure to provide high performance. The processes are divided into different task and they are distributed parallely among nodes.
+
+### The Heterogeneous Architecture Scheme
+The introduction of GPUs (Heterogeneous Architectures) was a turning point, which changed the way that super-computers were used and programmed previously. GPUs, despite the fact that they offered high performance by them, are usually accomponied by host CPUs to give them tasks (which have a high level of parallelism) to do (GPUs are not autonomous processors). The communication between the GPU and the CPU is not only can be done with a high-speed bus, but also it can be done with a shared area of physical or vitual memory.  
+
+### Desing of a parallel program
+There is no better programming model in absolute terms. The best one to apply will depend very much on the problem that the program should address and resolve. The most widely used models in parallel programming are:
+#### The Shared Memory Model (The Multi-threaded Model)
+In this model, tasks share a single memory area. There are mechanisms allowing the programmer to control the access to the shared memory. The main advantage of this model is that the programmer does not need to clarify the communication between tasks. Moreover, the major disadvantage of this model is that understanding and managing data locality is more difficult.
+
+A process can have multiple flow of execution. For instance, consider a program that start with a sequential part, then it creates a series of tasks that can be executed parallely. These programs usually are executed on shared memory architectures, so synchronization of threads is important. The programmer must prevent several threads from updating the same location of the memory at the same time.
+
+The current software and hardware are multi-threaded. The Intel hyper-threading technology implements multi-threading in hardware by switchnig between threads when one is stalled on memory or I/O.
+
+#### The Distributed Memory Model (Message Passing Model)
+
+This model is usually applied in the case that each processor has its own memory or distributed memory system. The programmer is responsible for determining the parallelism and data exchange that occurs through messages. This model requires the use of ad hoc software libraries to be used within the code. The Message Passing Interface (MPI) is designed clearly with distributed memory.
+
+![Message Passing Interface](img/message_passing_interface.jpg)
+
+#### The Data Parallel Model
+More tasks operate on the same data structure, but each task operates on a different portion of data. To implement this model, a programmer must develop a program that specifies the distribution and alignment of data.
+
+You can see the metrics that are used for evaluation of parallel programs.
+
+![Metrics](img/metrics.jpg)
+
+---
 ## Hashing in Python
 Hashing functions are used in security field. The following two snippets show how to used sha256 and keccak_512 hashing functions in python. This is just for showing how to do hashing. More reading for specific goals are definitely required. 
 
@@ -589,4 +677,3 @@ k = sha3.keccak_512("John Doe".encode())
 
 print(k.hexdigest())
 ```
-

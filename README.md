@@ -654,6 +654,19 @@ You can see the metrics that are used for evaluation of parallel programs.
 
 ![Metrics](img/metrics.jpg)
 
+### Processes and Threads
+
+#### Processes
+
+A process is an active program (under execution). It is more than the program source code as it includes program counter (**PC**), process stack (**PS**), registers, program code etc. In contrast, the program code is only the text. Indeed, Process Control Block (**PCB**) controls the operation of any process. PCB contains information about processes for example process priority, process id, process state (**new**, **ready**, **running**, **waiting**, **terminated**, **suspended**), register etc. A process can create other processes known as **child processes**.Process takes more time to terminate and it is isolated meaning it does not share memory with any other processes. 
+
+#### Threads
+A thread is a lightweight process (in fact it is a segment of a process) that can be managed independently by a scheduler. It improves the application performance using parallelism. A process can have multiple threads.  Additionally, threads do not isolate meaning a thread shares information like data segment, code segment, files etc. with its peer threads while it contains its own (private) registers, stack, counter etc. A thread have three states: running, ready, blocked. A Thread takes less time to terminate as compared to a process. 
+
+![Process vs. Thread](img/process_vs_thread.png)
+
+### Thread Level Parallelism
+
 ---
 ## Hashing in Python
 Hashing functions are used in security field. The following two snippets show how to used sha256 and keccak_512 hashing functions in python. This is just for showing how to do hashing. More reading for specific goals are definitely required. 

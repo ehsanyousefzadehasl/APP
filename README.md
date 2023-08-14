@@ -667,6 +667,84 @@ A thread is a lightweight process (in fact it is a segment of a process) that ca
 
 ### Thread Level Parallelism
 
+#### Defining a thread, instantiating it, passing an argument to the function
+
+The major components of the threading module are:
+1. The thread object
+2. The lock object
+3. The RLock object
+4. The semaphore object
+5. The condition object
+6. The event object
+
+The simplest way to use a thread is to instantiate it with a target function and then call the **start()** method. The python module threading has the **Thread()** method.
+
+```python
+class threading.Thread(group=None,
+                        target=FunctionName,
+                        name=ThreadName,
+                        args=(argumentToBePassedToTheTarget),
+                        kwargs={DictionaryOfArgumentsUsedForTheTargetFunction})
+```
+
+Let's check an example:
+
+```python
+import threading
+
+def function(i):
+    print("function called by thread " + str(i))
+    return
+
+threads = []
+for i in range(5):
+    t = threading.Thread(target=function, args=(i,))
+    threads.append(t)
+    t.start()
+    t.join()
+```
+The output of the example above is shown in the following figure:
+
+![example 1 output](img/example1_output.jpg)
+
+The order of the threads based on their index is caused because of the **join()** function.
+
+In the following example, we can see that the order is not respected.
+
+```python
+import threading
+import time
+import random
+
+def function(i):
+    time.sleep(random.randint(1,5))
+    print("function called by thread " + str(i))
+    return
+
+threads = []
+for i in range(5):
+    t = threading.Thread(target=function, args=(i,))
+    threads.append(t)
+    t.start()
+    # t.join()
+```
+The output of the code above is shown in the following figure:
+
+![no order without join() function](img/example2-no-order.jpg)
+
+**join()** function indicates wait till the thread terminates. This termination can be occured under following conditions:
+1. Normally
+2. Ill-handled Exception
+3. Timeout
+The time can be specified as a seed to **join()** function.
+
+#### Implementing a new thread using the Threading module
+1. Define a new subclass of the Thread class
+2. Override the __init__(self [,args]) method to add additonal arguments.
+3. Override the run(self [,args]) method to implement what the thread should do when it is started
+
+
+
 ---
 ## Hashing in Python
 Hashing functions are used in security field. The following two snippets show how to used sha256 and keccak_512 hashing functions in python. This is just for showing how to do hashing. More reading for specific goals are definitely required. 
